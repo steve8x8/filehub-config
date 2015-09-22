@@ -15,4 +15,4 @@ if [ -f /etc/checktelnetflag ]; then
     mv -f /etc/checktelnetflag /etc/checktelnetflag.OFF
 fi
 echo enable root shell
-sed -i "s|:/root:/sbin/nologin|:/root:/bin/sh|" /etc/passwd
+sed -i "s|:/root:/sbin/nologin|:/:/bin/sh|" /etc/passwd
