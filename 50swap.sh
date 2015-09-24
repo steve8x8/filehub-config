@@ -1,18 +1,18 @@
 # Add a swapfile on the data store drive 
 # (rsync needs this for large file copies)
+# you still need to manually create the .internal dir on one of your disks
 
 sed -i 's/^SWAP=.*/SWAP=swap/' /etc/firmware
 
 cat <<'EOF' > /etc/init.d/swap
-STORE_DIR=/.internal
-CONFIG_DIR="$STORE_DIR"/donottouch
+STORE_DIR=.internal
 rm -f /tmp/swapinfo
 
 echo "Running $0" > /tmp/swapinfo
 while read device mountpoint fstype remainder; do
     echo "Checking $device at $mountpoint" >> /tmp/swapinfo
-    if [ ${device:0:7} == "/dev/sd" -a -e "$mountpoint$CONFIG_DIR" ];then
-            swapfile="$mountpoint$CONFIG_DIR"/swapfile
+    if [ ${device:0:7} == "/dev/sd" -a -e "$mountpoint/$STORE_DIR" ];then
+            swapfile="$mountpoint/$STORE_DIR"/swapfile
             if [ ! -e "$swapfile" ]; then
                 echo "Creating swapfile $swapfile" >> /tmp/swapinfo
                 # large blocksize is flash-friendlier
