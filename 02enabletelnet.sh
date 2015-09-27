@@ -17,7 +17,7 @@ fi
 if grep -q 'root:/sbin/nologin' /etc/passwd
 then
     echo enable root shell
-    sed -i "s|:/root:/sbin/nologin|:/root:/bin/sh|" /etc/passwd
+    sed -i "s|:/root:/sbin/nologin|:/:/bin/sh|" /etc/passwd
 fi
 #if grep -q '/bin/sh-new' /etc/*passwd
 #then
